@@ -104,7 +104,7 @@ const PrintTestOrder = ({ orderId, onClose }) => {
     // Overlay (Lớp phủ mờ)
     <div
       id="print-modal-overlay"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 p-4 backdrop-blur-sm font-sans"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50"
     >
       {/* Container chính của Modal */}
       <div className="relative flex max-h-[95vh] w-full max-w-5xl flex-col rounded-xl bg-white shadow-2xl overflow-hidden">

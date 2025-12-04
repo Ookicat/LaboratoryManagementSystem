@@ -964,169 +964,198 @@ const ManagementUser = () => {
 
         {/* TABLE MOVED INSIDE SAME CONTAINER */}
         {/* TABLE STYLE: Monitoring - Event Logs style */}
-       {/* User table: scroll area + footer (footer luôn hiển thị dưới table) */}
-<div className="bg-white rounded-xl border border-gray-200 shadow-md flex-1 flex flex-col w-full relative">
-  {/* Scrollable table area */}
-  <div
-    className="overflow-x-auto overflow-y-auto max-h-[calc(100vh-300px)]"
-    ref={tableRef}
-  >
-    <table className="min-w-full table-auto">
-      <thead>
-        <tr className="sticky top-0 z-10 bg-[#f7fafd] border-b border-gray-200 text-[#004b8d] text-sm font-semibold">
-          <th className="px-4 py-3 text-left">STT</th>
-          <th className="px-4 py-3 text-left">Họ và tên</th>
-          <th className="px-4 py-3 text-left">Email</th>
-          <th className="px-4 py-3 text-left">SĐT</th>
-          <th className="px-4 py-3 text-left">CCCD</th>
-          <th className="px-4 py-3 text-left">Chức vụ</th>
-          <th className="px-4 py-3 text-left">Giới tính</th>
-          <th className="px-4 py-3 text-left">Trạng thái</th>
-          <th className="px-4 py-3 text-left">Thao tác</th>
-        </tr>
-      </thead>
+        {/* User table: scroll area + footer (footer luôn hiển thị dưới table) */}
+        <div className="bg-white rounded-xl border border-gray-200 shadow-md flex-1 flex flex-col w-full relative">
+          {/* Scrollable table area */}
+          <div
+            className="overflow-x-auto overflow-y-auto max-h-[calc(100vh-300px)]"
+            ref={tableRef}
+          >
+            <table className="min-w-full table-auto">
+              <thead>
+                <tr className="sticky top-0 z-10 bg-[#f7fafd] border-b border-gray-200 text-[#004b8d] text-sm font-semibold">
+                  <th className="px-4 py-3 text-left">STT</th>
+                  <th className="px-4 py-3 text-left">Họ và tên</th>
+                  <th className="px-4 py-3 text-left">Email</th>
+                  <th className="px-4 py-3 text-left">SĐT</th>
+                  <th className="px-4 py-3 text-left">CCCD</th>
+                  <th className="px-4 py-3 text-left">Chức vụ</th>
+                  <th className="px-4 py-3 text-left">Giới tính</th>
+                  <th className="px-4 py-3 text-left">Trạng thái</th>
+                  <th className="px-4 py-3 text-left">Thao tác</th>
+                </tr>
+              </thead>
 
-      <tbody>
-        {currentUsers.length === 0 ? (
-          <tr>
-            <td colSpan={9} className="px-4 py-6 text-center text-gray-500">
-              {loading ? "Đang tải..." : "Không tìm thấy user nào"}
-            </td>
-          </tr>
-        ) : (
-          currentUsers.map((u, idx) => {
-            const roleLabel = getRoleLabel(u.role);
-            const roleColor = getRoleColor(String(roleLabel));
-            return (
-              <tr
-                key={String(u.id)}
-                className="border-b border-gray-100 hover:bg-blue-50/50 transition"
-              >
-                <td className="px-4 py-3 align-middle text-gray-900">
-                  {page * PER_PAGE + idx + 1}
-                </td>
-
-                <td className="px-4 py-3 align-middle">
-                  <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 bg-blue-100 rounded-full flex items-center justify-center">
-                      <span className="text-blue-600 font-bold">
-                        {(u.fullName || "U").charAt(0).toUpperCase()}
-                      </span>
-                    </div>
-                    <div>
-                      <div className="font-medium text-gray-900">{u.fullName}</div>
-                      <div className="text-gray-400 text-xs">{u.dateOfBirth || ""}</div>
-                    </div>
-                  </div>
-                </td>
-
-                <td className="px-4 py-3 align-middle text-gray-600">{u.email}</td>
-
-                <td className="px-4 py-3 align-middle text-gray-600">
-                  {u.phoneNumber || "-"}
-                </td>
-
-                <td className="px-4 py-3 align-middle text-gray-600">
-                  {u.identifyNumber || "-"}
-                </td>
-
-                <td className="px-4 py-3 align-middle">
-                  <span className={`px-3 py-1 rounded-full text-xs font-semibold ${roleColor}`}>
-                    {roleLabel}
-                  </span>
-                </td>
-
-                <td className="px-4 py-3 align-middle text-gray-600">{u.gender || "-"}</td>
-
-                <td className="px-4 py-3 align-middle">
-                  <span
-                    className={`px-3 py-1 rounded-full text-white text-xs font-semibold ${
-                      String(u.status)?.toUpperCase() === "ACTIVE"
-                        ? "bg-green-600"
-                        : String(u.status)?.toUpperCase() === "PENDING_VERIFICATION"
-                        ? "bg-yellow-600"
-                        : "bg-red-600"
-                    }`}
-                  >
-                    {u.status || "-"}
-                  </span>
-                </td>
-
-                <td className="px-4 py-3 align-middle">
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => openView(u)}
-                      className="p-2 text-blue-600 hover:bg-blue-50 rounded-full"
-                      title="Xem chi tiết"
+              <tbody>
+                {currentUsers.length === 0 ? (
+                  <tr>
+                    <td
+                      colSpan={9}
+                      className="px-4 py-6 text-center text-gray-500"
                     >
-                      <Eye className="w-5 h-5" />
-                    </button>
-
-                    <button
-                      onClick={() => openEdit(u)}
-                      className="p-2 text-amber-600 hover:bg-amber-50 rounded-full"
-                      title="Chỉnh sửa"
-                    >
-                      <Edit2 className="w-5 h-5" />
-                    </button>
-
-                    <button
-                      onClick={() => {
-                        setSelectedUser(u);
-                        setShowDeleteModal(true);
-                      }}
-                      className="p-2 text-red-600 hover:bg-red-50 rounded-full"
-                      title={isSelf(u) ? "Bạn không thể xóa chính mình" : "Xóa"}
-                      disabled={isSelf(u)}
-                    >
-                      <Trash2 className="w-5 h-5" />
-                    </button>
-
-                    {String(u.status).toUpperCase() === "PENDING_VERIFICATION" ? (
-                      <button
-                        onClick={() => promptResendUser(u)}
-                        className="flex items-center gap-2 px-3 py-1 rounded text-xs font-medium border text-amber-800 border-amber-200 hover:bg-amber-50"
-                        title="Gửi lại email xác thực"
+                      {loading ? "Đang tải..." : "Không tìm thấy user nào"}
+                    </td>
+                  </tr>
+                ) : (
+                  currentUsers.map((u, idx) => {
+                    const roleLabel = getRoleLabel(u.role);
+                    const roleColor = getRoleColor(String(roleLabel));
+                    return (
+                      <tr
+                        key={String(u.id)}
+                        className="border-b border-gray-100 hover:bg-blue-50/50 transition"
                       >
-                        <Mail className="w-4 h-4" />
-                        Gửi lại
-                      </button>
-                    ) : String(u.status).toUpperCase() === "INACTIVE" ? (
-                      <button
-                        onClick={() => promptUnblockUser(u)}
-                        className="px-3 py-1 rounded text-xs font-medium border text-green-700 border-green-200 hover:bg-green-50"
-                        title={isSelf(u) ? "Bạn không thể kích hoạt chính mình" : "Bỏ chặn / Active"}
-                        disabled={isSelf(u)}
-                      >
-                        Active
-                      </button>
-                    ) : (
-                      <button
-                        onClick={() => promptInactiveUser(u)}
-                        className="px-3 py-1 rounded text-xs font-medium border text-gray-700 border-gray-200 hover:bg-gray-50"
-                        title={isSelf(u) ? "Bạn không thể thay đổi chính mình" : "Đặt về INACTIVE"}
-                        disabled={isSelf(u)}
-                      >
-                        Inactive
-                      </button>
-                    )}
-                  </div>
-                </td>
-              </tr>
-            );
-          })
-        )}
-      </tbody>
-    </table>
-  </div>
+                        <td className="px-4 py-3 align-middle text-gray-900">
+                          {page * PER_PAGE + idx + 1}
+                        </td>
 
-  {/* Footer always visible under table */}
-  <div className="flex items-center justify-end px-6 py-3 bg-[#f7fafd] border-t border-gray-100">
-    <div className="text-right text-gray-700 font-medium">
-      Tổng số người dùng: <span className="font-bold">{totalElements}</span>
-    </div>
-  </div>
-</div>
+                        <td className="px-4 py-3 align-middle">
+                          <div className="flex items-center gap-3">
+                            <div className="w-9 h-9 bg-blue-100 rounded-full flex items-center justify-center">
+                              <span className="text-blue-600 font-bold">
+                                {(u.fullName || "U").charAt(0).toUpperCase()}
+                              </span>
+                            </div>
+                            <div>
+                              <div className="font-medium text-gray-900">
+                                {u.fullName}
+                              </div>
+                              <div className="text-gray-400 text-xs">
+                                {u.dateOfBirth || ""}
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+
+                        <td className="px-4 py-3 align-middle text-gray-600">
+                          {u.email}
+                        </td>
+
+                        <td className="px-4 py-3 align-middle text-gray-600">
+                          {u.phoneNumber || "-"}
+                        </td>
+
+                        <td className="px-4 py-3 align-middle text-gray-600">
+                          {u.identifyNumber || "-"}
+                        </td>
+
+                        <td className="px-4 py-3 align-middle">
+                          <span
+                            className={`px-3 py-1 rounded-full text-xs font-semibold ${roleColor}`}
+                          >
+                            {roleLabel}
+                          </span>
+                        </td>
+
+                        <td className="px-4 py-3 align-middle text-gray-600">
+                          {u.gender || "-"}
+                        </td>
+
+                        <td className="px-4 py-3 align-middle">
+                          <span
+                            className={`px-3 py-1 rounded-full text-white text-xs font-semibold ${
+                              String(u.status)?.toUpperCase() === "ACTIVE"
+                                ? "bg-green-600"
+                                : String(u.status)?.toUpperCase() ===
+                                  "PENDING_VERIFICATION"
+                                ? "bg-yellow-600"
+                                : "bg-red-600"
+                            }`}
+                          >
+                            {u.status || "-"}
+                          </span>
+                        </td>
+
+                        <td className="px-4 py-3 align-middle">
+                          <div className="flex items-center gap-2">
+                            <button
+                              onClick={() => openView(u)}
+                              className="p-2 text-blue-600 hover:bg-blue-50 rounded-full"
+                              title="Xem chi tiết"
+                            >
+                              <Eye className="w-5 h-5" />
+                            </button>
+
+                            <button
+                              onClick={() => openEdit(u)}
+                              className="p-2 text-amber-600 hover:bg-amber-50 rounded-full"
+                              title="Chỉnh sửa"
+                            >
+                              <Edit2 className="w-5 h-5" />
+                            </button>
+
+                            <button
+                              onClick={() => {
+                                setSelectedUser(u);
+                                setShowDeleteModal(true);
+                              }}
+                              className="p-2 text-red-600 hover:bg-red-50 rounded-full"
+                              title={
+                                isSelf(u)
+                                  ? "Bạn không thể xóa chính mình"
+                                  : "Xóa"
+                              }
+                              disabled={isSelf(u)}
+                            >
+                              <Trash2 className="w-5 h-5" />
+                            </button>
+
+                            {String(u.status).toUpperCase() ===
+                            "PENDING_VERIFICATION" ? (
+                              <button
+                                onClick={() => promptResendUser(u)}
+                                className="flex items-center gap-2 px-3 py-1 rounded text-xs font-medium border text-amber-800 border-amber-200 hover:bg-amber-50"
+                                title="Gửi lại email xác thực"
+                              >
+                                <Mail className="w-4 h-4" />
+                                Gửi lại
+                              </button>
+                            ) : String(u.status).toUpperCase() ===
+                              "INACTIVE" ? (
+                              <button
+                                onClick={() => promptUnblockUser(u)}
+                                className="px-3 py-1 rounded text-xs font-medium border text-green-700 border-green-200 hover:bg-green-50"
+                                title={
+                                  isSelf(u)
+                                    ? "Bạn không thể kích hoạt chính mình"
+                                    : "Bỏ chặn / Active"
+                                }
+                                disabled={isSelf(u)}
+                              >
+                                Active
+                              </button>
+                            ) : (
+                              <button
+                                onClick={() => promptInactiveUser(u)}
+                                className="px-3 py-1 rounded text-xs font-medium border text-gray-700 border-gray-200 hover:bg-gray-50"
+                                title={
+                                  isSelf(u)
+                                    ? "Bạn không thể thay đổi chính mình"
+                                    : "Đặt về INACTIVE"
+                                }
+                                disabled={isSelf(u)}
+                              >
+                                Inactive
+                              </button>
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })
+                )}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Footer always visible under table */}
+          <div className="flex items-center justify-end px-6 py-3 bg-[#f7fafd] border-t border-gray-100">
+            <div className="text-right text-gray-700 font-medium">
+              Tổng số người dùng:{" "}
+              <span className="font-bold">{totalElements}</span>
+            </div>
+          </div>
+        </div>
 
         <br />
         {/* Pagination UI (sliding window 3 pages, auto-load next 100 when needed) */}
@@ -1222,14 +1251,12 @@ const ManagementUser = () => {
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>
-
-      
         </div>
 
         {/* Modals for add/edit/view/delete/block/unblock (unchanged) */}
         {(showAddModal || showEditModal) && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-2xl shadow-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="bg-white rounded-xl shadow-2xl max-w-3xl w-full max-h-[140vh] overflow-y-auto">
               <div className="sticky top-0 bg-blue-600 border-b border-gray-200 px-6 py-4 flex items-center justify-between">
                 <h2 className="text-white">
                   {showAddModal ? "Thêm người dùng" : "Chỉnh sửa người dùng"}
@@ -1718,7 +1745,7 @@ const ManagementUser = () => {
         {showBlockModal && userToBlock && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded w-full max-w-md">
-              <div className="px-5 py-3  bg-red-600 rounded">
+              <div className="px-5 py-3 bg-red-600 rounded">
                 <h2 className="text-white">Xác nhận chặn người dùng</h2>
               </div>
               <div className="p-6">

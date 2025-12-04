@@ -2,7 +2,7 @@ const statusColorEnum = {
   PENDING: "px-3 py-1 rounded-full text-white text-sm bg-yellow-600",
   IN_PROGRESS: "px-3 py-1 rounded-full text-white text-sm bg-blue-600",
   COMPLETED: "px-3 py-1 rounded-full text-white text-sm bg-green-600",
-  CANCELLED: "px-3 py-1 rounded-full text-white text-sm bg-red-600",
+  CANCELED: "px-3 py-1 rounded-full text-white text-sm bg-red-600",
 };
 import React, { useState, useEffect, useRef } from "react";
 import html2pdf from "html2pdf.js";
@@ -144,12 +144,11 @@ export default function SampleManagement() {
       <main className="flex-1 flex flex-col h-full overflow-auto px-8 py-8 relative">
         <div className="flex justify-between items-end mb-8">
           <div>
-            <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-              Quản lý Test Orders
-            </h2>
-            <div className="text-slate-500 mt-2 flex items-center gap-2">
-              <Search size={14} /> Quản lý yêu cầu xét nghiệm và theo dõi tiến
-              trình
+            <div className="space-y-1">
+              <h1 className="text-2xl font-bold">Quản lý Test Order </h1>
+              <p className="text-sm text-gray-600">
+                Quản lý tài khoản người dùng
+              </p>
             </div>
           </div>
           <button
@@ -316,8 +315,8 @@ export default function SampleManagement() {
         </div>
       </main>
       {runOrderId && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded shadow-lg w-full max-w-lg relative">
+        <div className="fixed inset-0  flex items-center justify-center z-50">
+          <div className="bg-white p-10 rounded-3xl shadow-2xl w-full max-w-5xl relative">
             <button
               className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
               onClick={() => setRunOrderId(null)}
@@ -331,7 +330,6 @@ export default function SampleManagement() {
           </div>
         </div>
       )}
-  
     </div>
   );
 }

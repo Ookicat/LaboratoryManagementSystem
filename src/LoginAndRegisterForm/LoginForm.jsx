@@ -42,11 +42,25 @@ export default function LoginPage() {
           JSON.stringify({ user, accessToken, refreshToken })
         );
       } catch (e) {
-        console.error("Failed to store user in localStorage:", e);}
+        console.error("Failed to store user in localStorage:", e);
+      }
       const successMsg = res?.data?.message || "Đăng nhập thành công!";
       setApiSuccess(successMsg);
       showSuccess(successMsg);
       setTimeout(() => navigate("/comingsoon"), 1200);
+
+      // --- LOGIC KIỂM TRA ROLE VÀ CHUYỂN HƯỚNG ---
+      let redirectPath = "/comingsoon";
+      if (user.role === "PATIENT") {
+        redirectPath = "/patient-portal";
+      }
+
+      // Kiểm tra ngầm (in ra console)
+      console.log(
+        `Kiểm tra ngầm: Vai trò người dùng là '${user.role}'. Đường dẫn chuyển hướng: ${redirectPath}`
+      );
+
+      setTimeout(() => navigate(redirectPath), 1200);
     } catch (err) {
       console.error("Login or fetch user failed:", err);
       const srv = err?.response?.data ?? err?.response ?? err;

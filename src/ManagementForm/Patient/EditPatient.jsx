@@ -88,7 +88,7 @@ export default function EditPatient({ patient, onClose, onUpdated }) {
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded shadow-2xl w-full max-w-5xl relative overflow-y-auto max-h-[90vh]">
-        <div className="bg-gradient-to-r from-indigo-600 to-blue-600 p-6 text-white rounded flex justify-between items-center">
+        <div className="bg-blue-600 p-6 text-white rounded flex justify-between items-center">
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded bg-white/20 flex items-center justify-center text-xl font-semibold">
               ✏️

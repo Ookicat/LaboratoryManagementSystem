@@ -176,6 +176,27 @@ export default function ViewTestOrder({ order, onClose }) {
       setLoadingEdit(false);
     }
   };
+  const updateOrderStatus = async (status) => {
+  if (!order?.orderId) {
+    showError("Order ID không hợp lệ");
+    return;
+  }
+
+  try {
+    await api.patch("/test-orders/status", {
+      testOrderId: order.orderId,
+      newStatus: status, // COMPLETED hoặc CANCELED
+    });
+    showSuccess(`Cập nhật trạng thái: ${status}`);
+  } catch (err) {
+    console.error("Update order status error:", err);
+    showError(
+      formatErrorMessage(
+        err?.response?.data || err?.message || "Không thể cập nhật trạng thái"
+      )
+    );
+  }
+};
 
   const confirmDelete = (comment) => setCommentToDelete(comment);
 
@@ -388,13 +409,15 @@ export default function ViewTestOrder({ order, onClose }) {
             </div>
 
             {/* Right: Comments */}
-            <div className="md:col-span-2 flex flex-col gap-6 bg-white p-4 rounded-xl shadow-sm border border-gray-200">
-              {" "}
+            <div className="md:col-span-2 flex flex-col gap-4 bg-white p-4 rounded-xl shadow-sm border border-gray-200">
+              {/* Header */}
               <div className="flex items-center justify-between mb-3 bg-blue-600 p-3 rounded-lg">
-                <h4 className="font-semibold text-white  text-lg">Ghi chú</h4>
+                <h4 className="font-semibold text-white text-lg">Ghi chú</h4>
                 <span className="text-xs text-white">Mới nhất ở trên</span>
               </div>
-              <div className="mb-3 h-96 overflow-y-auto pr-2 space-y-2">
+
+              {/* Comment List */}
+              <div className="flex-1 overflow-y-auto max-h-[400px] pr-2 space-y-2">
                 {comments.length === 0 ? (
                   <div className="py-6 text-center">
                     <p className="text-sm text-gray-400">Chưa có ghi chú.</p>
@@ -425,7 +448,6 @@ export default function ViewTestOrder({ order, onClose }) {
                                 value={editContent}
                                 onChange={(e) => setEditContent(e.target.value)}
                                 className="mt-1 w-full p-2 border border-gray-200 rounded-md text-sm min-h-[80px]"
-                                rows={3}
                               />
                             ) : (
                               <span className="text-sm font-medium text-slate-800 break-words">
@@ -440,6 +462,7 @@ export default function ViewTestOrder({ order, onClose }) {
                                 ? new Date(c.createdAt).toLocaleString()
                                 : "-"}
                             </span>
+
                             {editingCommentId === c.id ? (
                               <>
                                 <button
@@ -469,6 +492,7 @@ export default function ViewTestOrder({ order, onClose }) {
                                 ⋯
                               </button>
                             )}
+
                             {openMenuId === c.id &&
                               editingCommentId !== c.id && (
                                 <div className="absolute right-0 top-10 w-36 bg-white border rounded shadow-lg z-50">
@@ -507,9 +531,11 @@ export default function ViewTestOrder({ order, onClose }) {
                 )}
                 <div ref={commentsEndRef} />
               </div>
-              {/* Add Comment */}
-              <div className="mt-2 pt-2 border-t border-gray-100">
-                <div className="flex gap-2">
+
+              {/* Add Comment + Action Buttons */}
+              <div className="mt-2 pt-2 border-t border-gray-100 flex flex-col flex-1">
+                {/* Input thêm comment */}
+                <div className="flex gap-2 mb-4">
                   <input
                     type="text"
                     value={newComment}
@@ -529,6 +555,24 @@ export default function ViewTestOrder({ order, onClose }) {
                     }`}
                   >
                     {loadingComment ? "Đang thêm..." : "Thêm"}
+                  </button>
+                </div>
+
+                {/* Nút COMPLETED và CANCELED cố định đáy */}
+                <div className="flex gap-2 justify-center mt-auto">
+                  <button
+                    onClick={() => updateOrderStatus("COMPLETED")}
+                    disabled={!order?.orderId}
+                    className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    COMPLETED
+                  </button>
+                  <button
+                    onClick={() => updateOrderStatus("CANCELED")}
+                    disabled={!order?.orderId}
+                    className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    CANCELED
                   </button>
                 </div>
               </div>

@@ -198,12 +198,7 @@ export default function Sidebar({ className = "" }) {
       href: "/resend-email",
       privileges: ["VIEW_USER"],
     },
-    {
-      title: "Cài đặt",
-      icon: Settings,
-      href: "/comingsoon",
-      privileges: ["VIEW_CONFIGURATION"],
-    },
+   
   ];
 
   const scrollRef = useRef(null);

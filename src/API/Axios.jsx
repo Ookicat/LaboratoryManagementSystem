@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://api.labmanagement.online",
+  baseURL: "https://labmanagement.online",
   timeout: 15000,
 });
 

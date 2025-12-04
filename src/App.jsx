@@ -11,12 +11,10 @@ import ManagementRole from "./ManagementForm/Role/ManagementRole";
 import ManagementUser from "./ManagementForm/User/ManagementUser";
 import ManagementProfile from "./ManagementForm/ManagementProfile";
 import UploadUsers from "./ManagementForm/User/UploadUsers";
-import ManagementSystem from "./ManagementForm/ManagementSystem";
 import ManagementPatient from "./ManagementForm/Patient/ManagementPatient";
 import AddPatient from "./ManagementForm/Patient/AddPatient";
 import EditPatient from "./ManagementForm/Patient/EditPatient";
 import ViewPatient from "./ManagementForm/Patient/ViewPatient";
-import ManagementDevice from "./ManagementForm/ManagementDevice/ManagementDevice";
 import AddTestOrder from "./ManagementForm/TestOrders/addTestOrder";
 import VerifyEmailAuto from "./MailForm/VerifyEmailAuto";
 ("./MailForm/VerifyEmailAuto");
@@ -30,6 +28,8 @@ import SampleManagement from "./ManagementForm/TestOrders/SampleManagement";
 import ViewTestOrder from "./ManagementForm/TestOrders/ViewTestOrder";
 import PrintTestOrder from "./ManagementForm/TestOrders/PrintTestOrder";
 import RunTestOrder from "./ManagementForm/TestOrders/RunTestOrder";
+import ManagementDevice from "./ManagementForm/Device/ManagementDevice";
+
 function App() {
   return (
     <Router>
@@ -43,7 +43,6 @@ function App() {
         <Route path="/comingsoon" element={<ComingSoon />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/management/upload-users" element={<UploadUsers />} />
-        <Route path="/management/system" element={<ManagementSystem />} />
         <Route path="/verify-email" element={<VerifyEmailAuto />} />
         <Route path="/resend-email" element={<ListResendEmail />} />
         <Route path="/management/device" element={<ManagementDevice />} />
@@ -62,7 +61,6 @@ function App() {
         />
         <Route path="/management/test-order/add" element={<AddTestOrder />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/management/device" element={<ManagementDevice />} />
         <Route
           path="/management/test-order/print/:id"
           element={<PrintTestOrder />}
