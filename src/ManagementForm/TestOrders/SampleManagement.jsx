@@ -258,13 +258,7 @@ export default function SampleManagement() {
                           >
                             ▶️
                           </button>
-                          <button
-                            onClick={() => handlePrintPDF(order.orderId)}
-                            className="p-2 text-red-600 hover:bg-red-50 rounded-full"
-                            title="In"
-                          >
-                            <Printer className="w-4 h-4" />
-                          </button>
+                          
                         </div>
                       </td>
                     </tr>
