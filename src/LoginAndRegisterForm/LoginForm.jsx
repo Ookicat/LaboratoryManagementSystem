@@ -115,7 +115,7 @@ export default function LoginPage() {
               </Form.Group>
               <a
                 href="/forgot-password"
-                className="text-decoration-none text-primary text-right block"
+                className="text-primary text-sm inline-block px-1 justify-self-end mb-3"
                 onClick={(e) => {
                   e.preventDefault();
                   navigate("/forgot-password");
@@ -123,6 +123,7 @@ export default function LoginPage() {
               >
                 Quên mật khẩu?
               </a>
+
               <br />
 
               <Button

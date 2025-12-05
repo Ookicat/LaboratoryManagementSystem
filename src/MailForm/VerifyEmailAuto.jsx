@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Card, Row, Col, Button } from "react-bootstrap";
 import "animate.css";
 import { FaCheckCircle, FaStar, FaShieldAlt } from "react-icons/fa"; // Đã cập nhật đường dẫn import
+import api from "../API/Axios"; // use shared Axios instance
 
 /**
  * Custom hook để lấy query params từ URL
@@ -35,19 +36,18 @@ export default function VerifyEmailAuto() {
       return;
     }
 
-    // URL của API, sử dụng phiên bản hardcoded theo yêu cầu
-    const verifyUrl = `http://localhost:8081/api/auth/verify?token=${encodeURIComponent(
-      token
-    )}`;
+    // URL của API (dùng baseURL từ Axios hoặc từ env nếu cần)
+    const baseURL = import.meta?.env?.VITE_API_BASE_URL || api.defaults.baseURL || "";
+    const verifyUrl = `${baseURL}/auth/verify?token=${encodeURIComponent(token)}`;
     setCalled(true); // <--- Logic được thêm lại
 
     // ✅ Gọi BE xác minh tự động (fire-and-forget)
     (async () => {
       try {
-        // Sử dụng fetch hoặc axios nếu bạn đã cấu hình
-        await fetch(verifyUrl, {
-          method: "GET",
-          credentials: "include", // <--- Logic được thêm lại
+        // Gọi bằng Axios để đồng bộ với các phần khác
+        await api.get(`/auth/verify`, {
+          params: { token },
+          withCredentials: true,
           headers: { Accept: "application/json" },
         });
         // Không cần xử lý kết quả, chỉ cần gọi
